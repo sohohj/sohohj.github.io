@@ -156,7 +156,7 @@
 
   /* ---------------- 메인 계산 ---------------- */
   function analyze(input) {
-    const { name = "", birth, time, gender = "female", calendar = "solar" } = input;
+    const { name = "", birth, time, gender = "female", calendar = "solar", targetYear } = input;
     const [y, m, d] = birth.split("-").map(Number);
     let hour = null;
     let minute = 0;
@@ -289,16 +289,23 @@
       daeun.push({ age: daeunStartAge + i * 10, ...p });
     }
 
-    /* --- 올해 세운 --- */
-    const nowYear = new Date().getFullYear();
-    const seunYear = findLongitudeTime(315, kstMs(nowYear, 2, 4)) <= Date.now() ? nowYear : nowYear - 1;
-    const seun = ganziName(ganziIndex(((seunYear - 4) % 10 + 10) % 10, ((seunYear - 4) % 12 + 12) % 12));
+    /* --- 세운(연도별 운세) --- */
+    const thisYear = new Date().getFullYear();
+    const yearOf = (yy) => {
+      const seun = ganziName(ganziIndex(((yy - 4) % 10 + 10) % 10, ((yy - 4) % 12 + 12) % 12));
+      return { ...seun, year: yy, age: yy - y };
+    };
+    const wanted = Number(targetYear) || thisYear;
+    const seun = yearOf(wanted);
+    const seunList = [];
+    for (let yy = thisYear - 2; yy <= thisYear + 2; yy++) seunList.push(yearOf(yy));
 
-    const age = nowYear - y;
+    const age = seun.age;
 
     return {
       ok: true,
       input: { name, birth, time, hour, gender, calendar },
+      thisYear,
       age,
       pillars,
       five,
@@ -308,7 +315,8 @@
       daeun,
       daeunStartAge,
       daeunDirection,
-      seun: { ...seun, year: seunYear },
+      seun,
+      seunList,
       meta: {
         hasTime: hour !== null,
         prevTerm: kstParts(prevTermMs),

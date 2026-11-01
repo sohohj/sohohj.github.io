@@ -1191,3 +1191,136 @@ body {
   .field-row { grid-template-columns: 1fr; }
   .glossary-list { padding: 0 13px 14px; }
 }
+
+/* ---------- 연도 선택 ---------- */
+.year-pick {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  gap: 8px;
+  align-items: center;
+}
+
+.step {
+  border: 1.5px solid #ece7ff;
+  border-radius: 13px;
+  background: #fbfaff;
+  color: #7d7cff;
+  font-size: 12px;
+  font-weight: 800;
+  height: 44px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, transform 0.12s ease;
+}
+.step:hover { background: #f2f0ff; }
+.step:active { transform: scale(0.94); }
+.step.sm { height: 32px; width: 32px; padding: 0; font-size: 10px; border-radius: 10px; }
+
+.year-pick select {
+  width: 100%;
+  height: 44px;
+  border: 1.5px solid #ece7ff;
+  border-radius: 14px;
+  padding: 0 12px;
+  background: #fbfaff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3f3960;
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+  background-image: linear-gradient(45deg, transparent 50%, #a9a3c4 50%),
+    linear-gradient(135deg, #a9a3c4 50%, transparent 50%);
+  background-position: calc(100% - 18px) 19px, calc(100% - 13px) 19px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+.year-pick select:focus {
+  outline: none;
+  border-color: #a9b4ff;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(140, 160, 255, 0.16);
+}
+
+.year-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.ychip {
+  border: 1.5px solid #ece7ff;
+  border-radius: 999px;
+  padding: 6px 11px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  color: #8d87a6;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.ychip:hover { background: #f7f5ff; }
+.ychip.is-on {
+  background: linear-gradient(135deg, #8ec5ff, #8b86ff);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 14px -8px rgba(125, 124, 255, 0.95);
+}
+
+/* 결과 카드 안 연도 탭 */
+.year-select-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.year-tabs {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  border-radius: 13px;
+  background: #f6f4fd;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.year-tabs::-webkit-scrollbar { display: none; }
+.year-tabs li { flex: 1; }
+.ytab {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 4px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #8d87a6;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.ytab:hover { background: rgba(255, 255, 255, 0.75); }
+.ytab.is-on {
+  background: #fff;
+  color: #5c53c9;
+  box-shadow: 0 6px 14px -10px rgba(96, 78, 160, 0.9);
+}
+
+.year-guide {
+  margin: 0 0 12px;
+  padding: 10px 13px;
+  border-radius: 13px;
+  background: #f3f1ff;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: #65607f;
+  letter-spacing: -0.2px;
+  word-break: keep-all;
+}
+.year-guide b { color: #5c53c9; }
+
+@media (max-width: 460px) {
+  .ytab { font-size: 10.5px; padding: 7px 2px; }
+  .step.sm { width: 28px; height: 28px; }
+  .year-pick { grid-template-columns: 38px 1fr 38px; }
+}

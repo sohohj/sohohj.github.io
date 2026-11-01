@@ -93,6 +93,16 @@
           </div>
         </div>
 
+        <div class="field">
+          <label for="fYear">보고 싶은 해 <span class="opt">(운세 연도)</span></label>
+          <div class="year-pick">
+            <button class="step" type="button" id="yearPrev" aria-label="1년 전">◀</button>
+            <select id="fYear" name="targetYear" aria-label="운세를 볼 연도"></select>
+            <button class="step" type="button" id="yearNext" aria-label="1년 뒤">▶</button>
+          </div>
+          <div class="year-chips" id="yearChips"></div>
+        </div>
+
         <p class="form-err" id="formErr" role="alert" hidden></p>
 
         <button class="primary" type="submit" id="submitBtn">내 사주 보기 💧</button>
@@ -144,12 +154,22 @@
         <div class="yongsin" id="yongsin"></div>
       </section>
 
-        <!-- 3. 올해 운세 -->
+        <!-- 3. 연도별 운세 -->
       <section class="card" aria-labelledby="t3">
         <div class="card-head">
           <h2 id="t3"><span class="num">3</span> <span id="yearTitle">올해의 운세</span></h2>
           <p id="yearSub">올해 들어오는 기운을 그림으로 보여 줘요</p>
         </div>
+        <div class="year-select-row">
+          <button class="step sm" type="button" id="rYearPrev" aria-label="1년 전">◀</button>
+          <ul class="year-tabs" id="yearTabs" role="tablist" aria-label="운세 연도"></ul>
+          <button class="step sm" type="button" id="rYearNext" aria-label="1년 뒤">▶</button>
+        </div>
+        <p class="year-guide" id="yearGuide"></p>
+        <p class="term-note">
+          💡 <b>세운(歲運)</b>은 "그 해에 들어오는 기운"이에요. 해마다 다른 두 글자가 들어오는데,
+          내 사주에 이미 있는 기운과 겹치면 강해지고, 없던 기운이 들어오면 새로 생깁니다.
+        </p>
         <div class="year-hero">
           <div class="year-badge" id="yearBadge"></div>
           <canvas class="year-canvas" id="yearCanvas" width="520" height="240" role="img" aria-label="올해 운세 카드"></canvas>

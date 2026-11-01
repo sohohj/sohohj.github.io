@@ -106,6 +106,52 @@
   const form = $("#sajuForm");
   const formErr = $("#formErr");
   const resultEl = $("#result");
+  const THIS_YEAR = new Date().getFullYear();
+  const YEAR_MIN = THIS_YEAR - 90;
+  const YEAR_MAX = THIS_YEAR + 90;
+  const yearSelect = $("#fYear");
+
+  /* 연도 선택지 채우기 (1960 ~ 2100 등 실제 범위) */
+  (function fillYears() {
+    for (let yy = YEAR_MIN; yy <= YEAR_MAX; yy++) {
+      const opt = document.createElement("option");
+      opt.value = String(yy);
+      opt.textContent = `${yy}년${yy === THIS_YEAR ? " (올해)" : ""}`;
+      yearSelect.appendChild(opt);
+    }
+    yearSelect.value = String(THIS_YEAR);
+  })();
+
+  function currentYear() {
+    return Number(yearSelect.value) || THIS_YEAR;
+  }
+
+  function setYear(yy) {
+    const v = Math.max(YEAR_MIN, Math.min(YEAR_MAX, yy));
+    yearSelect.value = String(v);
+    syncYearChips();
+  }
+
+  function syncYearChips() {
+    const chips = $("#yearChips");
+    chips.innerHTML = "";
+    const y = currentYear();
+    [
+      [THIS_YEAR, "올해"],
+      [THIS_YEAR + 1, "내년"],
+      [THIS_YEAR - 1, "작년"],
+    ].forEach(([yy, label]) => {
+      const b = node("button", "ychip" + (yy === y ? " is-on" : ""), `${label} ${yy}`);
+      b.type = "button";
+      b.addEventListener("click", () => setYear(yy));
+      chips.appendChild(b);
+    });
+  }
+
+  yearSelect.addEventListener("change", syncYearChips);
+  $("#yearPrev").addEventListener("click", () => setYear(currentYear() - 1));
+  $("#yearNext").addEventListener("click", () => setYear(currentYear() + 1));
+  syncYearChips();
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -122,6 +168,11 @@
       showError("1900년 ~ 2100년 사이의 생일만 계산할 수 있어요.");
       return;
     }
+    const targetYear = Number(fd.get("targetYear")) || THIS_YEAR;
+    if (targetYear < year) {
+      showError("태어난 해보다 앞선 해의 운세는 볼 수 없어요.");
+      return;
+    }
     formErr.hidden = true;
 
     const data = {
@@ -130,6 +181,7 @@
       time: time || null,
       calendar: String(fd.get("calendar") || "solar"),
       gender: String(fd.get("gender") || "female"),
+      targetYear,
     };
 
     const res = S.analyze(data);
@@ -241,6 +293,11 @@
       ["기운의 세기", STRENGTH_TEXT[dm.strength], dm.element],
       ["가장 강한 기운", `${EL_ICON[strong]} ${EL_NAME[strong]}`, strong],
       ["채워 줄 기운", `${EL_ICON[ys]} ${EL_NAME[ys]}`, ys],
+      [
+        "보고 있는 해",
+        `${res.seun.year} ${res.seun.ko}${res.seun.year === res.thisYear ? " (올해)" : ""}`,
+        S.BRANCH_ELEMENT[res.seun.branch],
+      ],
     ].forEach(([k, v, e]) => {
       facts.appendChild(node("div", `fact f-${e}`, `<span>${k}</span><b>${v}</b>`));
     });
@@ -375,17 +432,28 @@
        </div>`;
   }
 
-  /* ---------------- 3. 올해 운세 ---------------- */
+  /* ---------------- 3. 연도별 운세 ---------------- */
   function renderYear(res) {
     const seun = res.seun;
     const sEl = S.STEM_ELEMENT[seun.stem];
     const bEl = S.BRANCH_ELEMENT[seun.branch];
     const heavy = res.five[bEl] >= 3 || res.five[sEl] >= 3;
     const dm = res.dayMaster.element;
+    const isThis = seun.year === res.thisYear;
+    const yLabel = isThis ? "올해" : `${seun.year}년`;
 
     $("#yearTitle").textContent = `${seun.year}년 운세 (${seun.ko}년)`;
     $("#yearSub").textContent =
-      `올해는 ${S.STEMS_H[seun.stem]}(${EL_KO[sEl]}) · ${S.BRANCHES_H[seun.branch]}(${EL_KO[bEl]}) 기운이 들어와요`;
+      `${seun.year}년에는 ${S.STEMS_H[seun.stem]}(${EL_KO[sEl]}) · ${S.BRANCHES_H[seun.branch]}(${EL_KO[bEl]}) 기운이 들어와요`;
+
+    renderYearTabs(res);
+
+    const d = res.daeun.filter((x) => res.age >= x.age).pop() || res.daeun[0];
+    $("#yearGuide").innerHTML =
+      seun.age < 0
+        ? "태어난 해보다 앞선 해라 운세를 볼 수 없어요."
+        : `${seun.year}년은 <b>${res.age}세</b>, 대운으로는 <b>${d.ko}</b> 시즌이에요. ` +
+          `${isThis ? "지금의 흐름" : "그 시즌 안에서"} 이 해만의 기운을 더해 봤어요.`;
 
     $("#yearBadge").innerHTML =
       `<span class="y-y">${seun.year}</span>
@@ -396,23 +464,23 @@
     let summary;
     if (heavy) {
       summary =
-        `올해는 <b>${EL_NAME[bEl]}</b> 기운이 크게 들어와요. 내 사주에 이미 ${EL_NAME[bEl]}가 ${res.five[bEl]}개 있어서 ` +
+        `${yLabel}은 <b>${EL_NAME[bEl]}</b> 기운이 크게 들어와요. 내 사주에 이미 ${EL_NAME[bEl]}가 ${res.five[bEl]}개 있어서 ` +
         `무게가 더 늘어나는 해예요. 의욕은 좋지만 <b>몸과 마음이 무거워지기 쉬우니</b>, 될 일만 골라서 하는 게 좋아요. ` +
         `일정을 줄이고 쉬는 시간을 미리 정해 두면 훨씬 편합니다.`;
     } else if (sEl === dm || bEl === dm) {
       summary =
-        `올해는 <b>${EL_NAME[dm]}</b> 기운이 들어오는 해예요. 내 중심과 같은 기운이라 ` +
+        `${yLabel}은 <b>${EL_NAME[dm]}</b> 기운이 들어오는 해예요. 내 중심과 같은 기운이라 ` +
         `<b>나를 돌보기 좋은 한 해</b>입니다. 남의 일보다 내 건강·공부·관계를 정리하기에 좋아요.`;
     } else {
       summary =
-        `올해는 <b>${EL_NAME[sEl]}</b>과 <b>${EL_NAME[bEl]}</b> 기운이 들어와요. 내 사주의 ${EL_NAME[dm]} 기운과 큰 충돌 없이 ` +
+        `${yLabel}은 <b>${EL_NAME[sEl]}</b>과 <b>${EL_NAME[bEl]}</b> 기운이 들어와요. 내 사주의 ${EL_NAME[dm]} 기운과 큰 충돌 없이 ` +
         `<b>차분히 흐르는 해</b>예요. 새로운 일보다 하던 일을 마무리하고 정돈하기에 좋습니다.`;
     }
     $("#yearSummary").innerHTML = summary;
 
     const fillRatio = (res.five[res.yongsin.primary] + res.five[res.yongsin.secondary]) / 6;
     const gauge = Math.round(42 + Math.min(1, fillRatio) * 40 + (heavy ? -4 : 6));
-    $("#gaugeLabel").textContent = `${EL_NAME[dm]} 기운의 편안한 정도`;
+    $("#gaugeLabel").textContent = `${yLabel} ${EL_NAME[dm]} 기운의 편안한 정도`;
     $("#gaugeValue").textContent = gauge;
     const fill = $("#gaugeFill");
     fill.style.width = "0%";
@@ -421,6 +489,41 @@
     });
 
     drawYear(res, { sEl, bEl, heavy, seun });
+  }
+
+  /* 결과 카드 안의 연도 탭 */
+  function renderYearTabs(res) {
+    const ul = $("#yearTabs");
+    ul.innerHTML = "";
+    const list = res.seunList.map((s) => s.year);
+    if (!list.includes(res.seun.year)) list.push(res.seun.year);
+    list.sort((a, b) => a - b);
+    list.forEach((yy) => {
+      const li = document.createElement("li");
+      const b = node("button", "ytab" + (yy === res.seun.year ? " is-on" : ""), String(yy));
+      b.type = "button";
+      b.setAttribute("role", "tab");
+      b.setAttribute("aria-selected", String(yy === res.seun.year));
+      b.addEventListener("click", () => changeYear(yy));
+      li.appendChild(b);
+      ul.appendChild(li);
+    });
+  }
+
+  /* 연도를 바꾸면 같은 입력으로 다시 계산 */
+  function changeYear(yy) {
+    if (!current) return;
+    const data = Object.assign({}, current.input, { targetYear: yy });
+    const next = S.analyze(data);
+    if (!next.ok) return;
+    next.summaryTitle = current.summaryTitle;
+    renderSummary(next);
+    renderYear(next);
+    renderDaeun(next);
+    renderAdvice(next);
+    current = next;
+    setYear(yy);
+    say(`${yy}년은 <b>${next.seun.ko}</b> 해야! 기운이 어떻게 들어오는지 봤어? 🔍`);
   }
 
   /* ---------------- 4. 주제별 운세 ---------------- */

@@ -503,20 +503,31 @@
   /* 결과 카드 안의 연도 탭 */
   function renderYearTabs(res) {
     const wrap = $("#yearTabs");
-    wrap.innerHTML = "";
     const list = res.seunList.map((s) => s.year);
     if (!list.includes(res.seun.year)) list.push(res.seun.year);
     list.sort((a, b) => a - b);
-    list.forEach((yy) => {
-      const on = yy === res.seun.year;
-      const b = node("button", "ytab" + (on ? " is-on" : ""), String(yy));
-      b.type = "button";
-      b.setAttribute("role", "tab");
+
+    const sig = list.join(",");
+    if (wrap.dataset.sig !== sig) {
+      /* 목록이 바뀔 때만 다시 만든다 (이벤트 중복 등록 방지) */
+      wrap.innerHTML = "";
+      list.forEach((yy) => {
+        const b = node("button", "ytab", String(yy));
+        b.type = "button";
+        b.setAttribute("role", "tab");
+        b.dataset.year = String(yy);
+        b.addEventListener("click", () => changeYear(Number(b.dataset.year)));
+        wrap.appendChild(b);
+      });
+      wrap.dataset.sig = sig;
+    }
+
+    Array.from(wrap.children).forEach((b) => {
+      const on = Number(b.dataset.year) === res.seun.year;
+      b.classList.toggle("is-on", on);
       b.setAttribute("aria-selected", String(on));
-      b.setAttribute("aria-label", `${yy}년 운세`);
+      b.setAttribute("aria-label", `${b.dataset.year}년 운세`);
       b.tabIndex = on ? 0 : -1;
-      b.addEventListener("click", () => changeYear(yy));
-      wrap.appendChild(b);
     });
   }
 
@@ -527,11 +538,11 @@
     const next = S.analyze(data);
     if (!next.ok) return;
     next.summaryTitle = current.summaryTitle;
+    current = next;
     renderSummary(next);
     renderYear(next);
     renderDaeun(next);
     renderAdvice(next);
-    current = next;
     setYear(yy);
     say(`${yy}년은 <b>${next.seun.ko}</b> 해야! 기운이 어떻게 들어오는지 봤어? 🔍`);
   }

@@ -151,6 +151,15 @@
   yearSelect.addEventListener("change", syncYearChips);
   $("#yearPrev").addEventListener("click", () => setYear(currentYear() - 1));
   $("#yearNext").addEventListener("click", () => setYear(currentYear() + 1));
+  $("#rYearPrev").addEventListener("click", () => shiftYear(-1));
+  $("#rYearNext").addEventListener("click", () => shiftYear(1));
+
+  /* 결과 카드에서 이웃 연도로 이동 */
+  function shiftYear(delta) {
+    const yy = (current ? current.seun.year : currentYear()) + delta;
+    if (current) changeYear(yy);
+    else setYear(yy);
+  }
   syncYearChips();
 
   form.addEventListener("submit", (e) => {
@@ -493,20 +502,21 @@
 
   /* 결과 카드 안의 연도 탭 */
   function renderYearTabs(res) {
-    const ul = $("#yearTabs");
-    ul.innerHTML = "";
+    const wrap = $("#yearTabs");
+    wrap.innerHTML = "";
     const list = res.seunList.map((s) => s.year);
     if (!list.includes(res.seun.year)) list.push(res.seun.year);
     list.sort((a, b) => a - b);
     list.forEach((yy) => {
-      const li = document.createElement("li");
-      const b = node("button", "ytab" + (yy === res.seun.year ? " is-on" : ""), String(yy));
+      const on = yy === res.seun.year;
+      const b = node("button", "ytab" + (on ? " is-on" : ""), String(yy));
       b.type = "button";
       b.setAttribute("role", "tab");
-      b.setAttribute("aria-selected", String(yy === res.seun.year));
+      b.setAttribute("aria-selected", String(on));
+      b.setAttribute("aria-label", `${yy}년 운세`);
+      b.tabIndex = on ? 0 : -1;
       b.addEventListener("click", () => changeYear(yy));
-      li.appendChild(b);
-      ul.appendChild(li);
+      wrap.appendChild(b);
     });
   }
 

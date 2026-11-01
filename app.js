@@ -160,6 +160,8 @@
     if (current) changeYear(yy);
     else setYear(yy);
   }
+  window.__shift = shiftYear;
+  window.__probe = { get current() { return current && current.seun.year; } };
   syncYearChips();
 
   form.addEventListener("submit", (e) => {

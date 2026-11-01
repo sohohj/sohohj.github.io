@@ -151,15 +151,17 @@
   yearSelect.addEventListener("change", syncYearChips);
   $("#yearPrev").addEventListener("click", () => setYear(currentYear() - 1));
   $("#yearNext").addEventListener("click", () => setYear(currentYear() + 1));
-  $("#rYearPrev").addEventListener("click", () => shiftYear(-1));
-  $("#rYearNext").addEventListener("click", () => shiftYear(1));
-
   /* 결과 카드에서 이웃 연도로 이동 */
   function shiftYear(delta) {
     const yy = (current ? current.seun.year : currentYear()) + delta;
     if (current) changeYear(yy);
     else setYear(yy);
   }
+
+  /* 결과 카드의 이전/다음 연도 버튼 */
+  $("#rYearPrev").addEventListener("click", () => shiftYear(-1));
+  $("#rYearNext").addEventListener("click", () => shiftYear(1));
+
   syncYearChips();
 
   form.addEventListener("submit", (e) => {

@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f6e9ff" />
-  <meta name="description" content="계미(癸未) 수 일간 캐릭터 '미리'와 함께 보는 이행자 님의 사주와 2027 정미년 운세" />
-  <title>수(水)의 요정 미리 · 이행자 님의 사주</title>
+  <meta name="description" content="이름과 생년월일만 넣으면 물방울 요정 '미리'가 사주를 쉽게 풀어 주는 사주 운세 캐릭터북" />
+  <title>수(水)의 요정 미리 · 내 사주 쉽게 보기</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -15,11 +15,10 @@
       <div class="hero-text">
         <p class="eyebrow">SAJU CHARACTER BOOK</p>
         <h1>수(水)의 요정 <b>미리</b></h1>
-        <p class="sub">1969.05.08 · 묘시(06:30) · 부산</p>
-        <div class="hero-chips">
-          <span class="chip">음력 1969.03.22</span>
-          <span class="chip">여성</span>
-          <span class="chip">일간 계(癸)</span>
+        <p class="sub" id="heroSub">이름과 생일만 알려주면 내 사주를 쉽게 풀어 줄게</p>
+        <div class="hero-chips" id="heroChips">
+          <span class="chip">🐣 태어난 시간 몰라도 OK</span>
+          <span class="chip">📱 내 정보는 저장 안 함</span>
         </div>
       </div>
 
@@ -41,10 +40,10 @@
                 <span class="eye e2"><i></i></span>
                 <span class="blush b1"></span>
                 <span class="blush b2"></span>
-                <span class="mouth" id="miriMouth"></span>
+                <span class="mouth"></span>
               </div>
               <span class="hair"></span>
-              <span class="crown" id="miriCrown">🌙</span>
+              <span class="crown">🌙</span>
             </div>
             <span class="drop"><i></i></span>
           </div>
@@ -54,203 +53,209 @@
       </div>
     </header>
 
-    <!-- ================= 사주팔자 ================= -->
-    <section class="card" aria-labelledby="t1">
+    <!-- ================= 입력 폼 ================= -->
+    <section class="card form-card" id="formCard" aria-labelledby="t0">
       <div class="card-head">
-        <h2 id="t1"><span class="num">1</span> 사주팔자</h2>
-        <p>태어난 순간의 기운을 네 기둥으로 담았어요</p>
-      </div>
-      <div class="pillars">
-        <article class="pillar">
-          <span class="p-tag">년주 · 뿌리</span>
-          <span class="p-hanja">己酉</span>
-          <span class="p-ko">기유</span>
-          <span class="p-animal">🐓 닭</span>
-        </article>
-        <article class="pillar">
-          <span class="p-tag">월주 · 성장</span>
-          <span class="p-hanja">己巳</span>
-          <span class="p-ko">기사</span>
-          <span class="p-animal">🐍 뱀</span>
-        </article>
-        <article class="pillar is-me">
-          <span class="p-tag">일주 · 나</span>
-          <span class="p-hanja">癸未</span>
-          <span class="p-ko">계미</span>
-          <span class="p-animal">🐑 양</span>
-          <span class="p-me">일간 계(癸)</span>
-        </article>
-        <article class="pillar">
-          <span class="p-tag">시주 · 열매</span>
-          <span class="p-hanja">乙卯</span>
-          <span class="p-ko">을묘</span>
-          <span class="p-animal">🐰 토끼</span>
-        </article>
-      </div>
-      <p class="note">
-        <b>일간 계(癸)</b>는 이슬비처럼 조용히 스며들며 사람의 마음을 읽는 수(水). 겉은 부드럽지만 속은
-        단단한 편이에요. 네 기둥 모두 음(陰)으로 <b>차분하고 섬세한 흐름</b>이 강한 사주입니다.
-      </p>
-    </section>
-
-    <!-- ================= 오행 ================= -->
-    <section class="card" aria-labelledby="t2">
-      <div class="card-head">
-        <h2 id="t2"><span class="num">2</span> 오행 밸런스</h2>
-        <p>나를 이루는 다섯 가지 기운의 양</p>
+        <h2 id="t0"><span class="num">✎</span> 내 정보 입력</h2>
+        <p>양력 기준이에요. 시간은 몰라도 괜찮아요!</p>
       </div>
 
-      <ul class="elements" id="elements">
-        <li data-el="wood">
-          <span class="e-ico">🌳</span>
-          <div class="e-body">
-            <div class="e-top"><span class="e-name">목(木)</span><b>2</b></div>
-            <div class="e-bar"><i style="--w:40%"></i></div>
-          </div>
-          <span class="e-tag">성장</span>
-        </li>
-        <li data-el="fire">
-          <span class="e-ico">🔥</span>
-          <div class="e-body">
-            <div class="e-top"><span class="e-name">화(火)</span><b>1</b></div>
-            <div class="e-bar"><i style="--w:20%"></i></div>
-          </div>
-          <span class="e-tag weak">부족</span>
-        </li>
-        <li data-el="earth">
-          <span class="e-ico">⛰️</span>
-          <div class="e-body">
-            <div class="e-top"><span class="e-name">토(土)</span><b>3</b></div>
-            <div class="e-bar"><i style="--w:60%"></i></div>
-          </div>
-          <span class="e-tag strong">강함</span>
-        </li>
-        <li data-el="metal">
-          <span class="e-ico">⚙️</span>
-          <div class="e-body">
-            <div class="e-top"><span class="e-name">금(金)</span><b>1</b></div>
-            <div class="e-bar"><i style="--w:20%"></i></div>
-          </div>
-          <span class="e-tag weak">부족</span>
-        </li>
-        <li data-el="water">
-          <span class="e-ico">💧</span>
-          <div class="e-body">
-            <div class="e-top"><span class="e-name">수(水)</span><b>1</b></div>
-            <div class="e-bar"><i style="--w:20%"></i></div>
-          </div>
-          <span class="e-tag">나</span>
-        </li>
-      </ul>
-
-      <div class="yongsin">
-        <span class="y-ico">🧭</span>
-        <div>
-          <strong>용신(조율점) · 금(金)</strong>
-          <p>토 기운이 넉넉한 만큼, 금으로 호흡을 정리하면 흐름이 막히지 않아요. 다음은 화(火)가 보완 역할을 합니다.</p>
+      <form id="sajuForm" novalidate>
+        <div class="field">
+          <label for="fName">이름 <span class="opt">(선택)</span></label>
+          <input id="fName" name="name" type="text" maxlength="20" placeholder="예: 홍길동" autocomplete="off" />
         </div>
-      </div>
-    </section>
 
-    <!-- ================= 2027 운세 ================= -->
-    <section class="card" aria-labelledby="t3">
-      <div class="card-head">
-        <h2 id="t3"><span class="num">3</span> 2027 정미년 운세</h2>
-        <p>흔들리는 물 위에 뜬 <b>발판</b> 하나</p>
-      </div>
-
-      <div class="year-hero">
-        <div class="year-badge">
-          <span class="y-y">2027</span>
-          <span class="y-hanja">丁未</span>
-          <span class="y-ko">정미(음양 음)</span>
+        <div class="field-row">
+          <div class="field">
+            <label for="fBirth">생년월일 <span class="req">*</span></label>
+            <input id="fBirth" name="birth" type="date" min="1900-01-01" max="2100-12-31" required />
+          </div>
+          <div class="field">
+            <label for="fTime">태어난 시간 <span class="opt">(선택)</span></label>
+            <input id="fTime" name="time" type="time" step="60" />
+          </div>
         </div>
-        <canvas class="year-canvas" id="yearCanvas" width="520" height="240" role="img"
-          aria-label="2027 정미년은 기운이 늘어나 과부하가 걸리는 해라는 뜻의 카드"></canvas>
-      </div>
 
-      <p class="year-summary">
-        2027년은 토(未)와 화(丁)가 함께 들어오는 해예요. 이미 토가 강한 편이라
-        <b>기운이 더 무거워지는</b> 흐름이에요. 컨디션·체력·대인 경계를 한 번 더 정돈해 두면 좋습니다.
-      </p>
-
-      <div class="mood-meter">
-        <div class="mm-head">
-          <span>수(水)의 흐름 지수</span>
-          <b id="mmValue">62</b>
+        <div class="field">
+          <span class="lbl">양력 / 음력</span>
+          <div class="segmented" role="radiogroup" aria-label="달력 종류">
+            <label><input type="radio" name="calendar" value="solar" checked /><span>양력</span></label>
+            <label><input type="radio" name="calendar" value="lunar" /><span>음력</span></label>
+          </div>
         </div>
-        <div class="mm-track"><i id="mmFill"></i></div>
-        <div class="mm-scale"><span>무거움</span><span>균형</span><span>가벼움</span></div>
-      </div>
-    </section>
 
-    <!-- ================= 주제별 운세 ================= -->
-    <section class="card" aria-labelledby="t4">
-      <div class="card-head">
-        <h2 id="t4"><span class="num">4</span> 주제별 운세</h2>
-        <p>탭을 골라서 하나씩 볼까요?</p>
-      </div>
-
-      <div class="tabs" role="tablist" aria-label="운세 주제">
-        <button class="tab is-on" role="tab" aria-selected="true" data-tab="wealth" type="button">
-          <span class="t-ico">💰</span><span>재물운</span>
-        </button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="career" type="button">
-          <span class="t-ico">💼</span><span>직업운</span>
-        </button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="love" type="button">
-          <span class="t-ico">💗</span><span>연애운</span>
-        </button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="health" type="button">
-          <span class="t-ico">🌿</span><span>건강운</span>
-        </button>
-      </div>
-
-      <div class="panel" id="panel" role="tabpanel">
-        <div class="panel-canvas-wrap">
-          <canvas class="panel-canvas" id="panelCanvas" width="480" height="200" role="img" aria-label="운세 이미지"></canvas>
+        <div class="field">
+          <span class="lbl">성별 <span class="opt">(선택, 대운 표시에만 사용)</span></span>
+          <div class="segmented" role="radiogroup" aria-label="성별">
+            <label><input type="radio" name="gender" value="female" checked /><span>여성</span></label>
+            <label><input type="radio" name="gender" value="male" /><span>남성</span></label>
+          </div>
         </div>
-        <h3 id="panelTitle">재물운</h3>
-        <p class="panel-text" id="panelText"></p>
-        <ul class="tips" id="panelTips"></ul>
-      </div>
+
+        <p class="form-err" id="formErr" role="alert" hidden></p>
+
+        <button class="primary" type="submit" id="submitBtn">내 사주 보기 💧</button>
+        <p class="privacy">입력한 정보는 서버로 전송하지 않고, 이 브라우저 안에서만 계산해요.</p>
+      </form>
     </section>
 
-    <!-- ================= 대운 ================= -->
-    <section class="card" aria-labelledby="t5">
-      <div class="card-head">
-        <h2 id="t5"><span class="num">5</span> 10년 주기 대운</h2>
-        <p>지금 나의 나이에 불이 들어오는 곳 ✨</p>
-      </div>
-      <ol class="daeun" id="daeun"></ol>
-      <p class="note small">
-        대운 시작 나이는 근사값입니다. 정밀하게 보려면 절기 기준 계산이 필요해요.
-      </p>
-    </section>
+    <!-- ================= 결과 영역 (입력 전에는 숨김) ================= -->
+    <div id="result" hidden>
+      <!-- 결과 요약 -->
+      <section class="card result-hero" aria-labelledby="r0">
+        <div class="card-head">
+          <h2 id="r0"><span class="num">0</span> <span id="resultTitle">사주 결과</span></h2>
+          <p id="resultSub">한 줄 요약을 준비하고 있어요</p>
+        </div>
+        <p class="summary-line" id="summaryLine"></p>
+        <div class="quick-facts" id="quickFacts"></div>
+        <div class="btn-row">
+          <button class="ghost" type="button" id="editBtn">정보 수정</button>
+          <button class="ghost" type="button" id="shareBtn">결과 복사</button>
+        </div>
+      </section>
 
-    <!-- ================= 실천 조언 ================= -->
-    <section class="card advice" aria-labelledby="t6">
-      <div class="card-head">
-        <h2 id="t6"><span class="num">6</span> 미리의 실천 조언</h2>
-        <p>운명을 정하는 대신, 오늘의 습관을 골라요</p>
-      </div>
-      <div class="advice-grid">
-        <div class="adv"><span>💧</span><p><b>물 한 잔</b> 물은 수 기운을 채우는 가장 쉬운 방법이에요.</p></div>
-        <div class="adv"><span>⚙️</span><p><b>정리 규칙</b> 금(金)은 규칙의 기운. 작은 정리 루틴을 만들어 보세요.</p></div>
-        <div class="adv"><span>🔥</span><p><b>햇볕 산책</b> 부족한 화(火)는 짧은 산책으로 채울 수 있어요.</p></div>
-        <div class="adv"><span>🌙</span><p><b>경계 정하기</b> 토가 무거워질 때일수록 사람 사이 경계가 약이 돼요.</p></div>
-      </div>
-    </section>
+      <!-- 1. 사주팔자 -->
+      <section class="card" aria-labelledby="t1">
+        <div class="card-head">
+          <h2 id="t1"><span class="num">1</span> 사주팔자 (네 기둥)</h2>
+          <p>태어난 순간을 여덟 글자로 적은 카드예요</p>
+        </div>
+        <p class="term-note">
+          💡 <b>사주팔자</b>는 "네 개의 기둥 × 두 글자"라는 뜻이에요. 태어난 연, 월, 일, 시를
+          각각 한 쌍의 글자로 적어서 모두 여덟 글자가 됩니다.
+        </p>
+        <div class="pillars" id="pillars"></div>
+        <div class="pillar-help" id="pillarHelp"></div>
+      </section>
+
+      <!-- 2. 오행 밸런스 -->
+      <section class="card" aria-labelledby="t2">
+        <div class="card-head">
+          <h2 id="t2"><span class="num">2</span> 다섯 기운의 양 (오행)</h2>
+          <p>내 안에 어떤 기운이 많고 적은지 보여 줘요</p>
+        </div>
+        <p class="term-note">
+          💡 <b>오행</b>은 세상을 이루는 다섯 가지 기운이에요. 나무(🌳), 불(🔥), 흙(⛰️), 쇠(⚙️), 물(💧)
+          다섯 가지로 나누고, 각각 '자라고 · 뜨겁고 · 단단하고 · 정리하고 · 흐르는' 성질을 뜻해요.
+        </p>
+        <ul class="elements" id="elements"></ul>
+        <div class="yongsin" id="yongsin"></div>
+      </section>
+
+      <!-- 3. 올해 운세 -->
+      <section class="card" aria-labelledby="t3">
+        <div class="card-head">
+          <h2 id="t3"><span class="num">3</span> <span id="yearTitle">올해의 운세</span></h2>
+          <p id="yearSub">올해 들어오는 기운을 그림으로 보여 줘요</p>
+        </div>
+        <div class="year-hero">
+          <div class="year-badge" id="yearBadge"></div>
+          <canvas class="year-canvas" id="yearCanvas" width="520" height="240" role="img" aria-label="올해 운세 카드"></canvas>
+        </div>
+        <p class="year-summary" id="yearSummary"></p>
+
+        <div class="mood-meter">
+          <div class="mm-head">
+            <span id="gaugeLabel">컨디션 균형 지수</span>
+            <b id="gaugeValue">-</b>
+          </div>
+          <div class="mm-track"><i id="gaugeFill"></i></div>
+          <div class="mm-scale"><span>무거움</span><span>무난</span><span>가벼움</span></div>
+        </div>
+      </section>
+
+      <!-- 4. 주제별 운세 -->
+      <section class="card" aria-labelledby="t4">
+        <div class="card-head">
+          <h2 id="t4"><span class="num">4</span> 주제별 운세</h2>
+          <p>궁금한 것부터 골라서 볼까요?</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="운세 주제">
+          <button class="tab is-on" role="tab" aria-selected="true" data-tab="wealth" type="button">
+            <span class="t-ico">💰</span><span>재물운</span>
+          </button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="career" type="button">
+            <span class="t-ico">💼</span><span>직업운</span>
+          </button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="love" type="button">
+            <span class="t-ico">💗</span><span>연애운</span>
+          </button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="health" type="button">
+            <span class="t-ico">🌿</span><span>건강운</span>
+          </button>
+        </div>
+
+        <div class="panel" id="panel" role="tabpanel">
+          <div class="panel-canvas-wrap">
+            <canvas class="panel-canvas" id="panelCanvas" width="480" height="200" role="img" aria-label="운세 이미지"></canvas>
+          </div>
+          <h3 id="panelTitle">재물운</h3>
+          <p class="panel-text" id="panelText"></p>
+          <ul class="tips" id="panelTips"></ul>
+        </div>
+      </section>
+
+      <!-- 5. 대운 -->
+      <section class="card" aria-labelledby="t5">
+        <div class="card-head">
+          <h2 id="t5"><span class="num">5</span> 10년마다 바뀌는 큰 흐름 (대운)</h2>
+          <p>내 나이에 불이 들어오는 곳이 지금의 큰 흐름이에요</p>
+        </div>
+        <p class="term-note">
+          💡 <b>대운</b>은 10년마다 주인공이 바뀌는 "긴 시즌" 같은 거예요. 그 시즌의 분위기가
+          내 삶의 큰 방향이 됩니다.
+        </p>
+        <ol class="daeun" id="daeun"></ol>
+        <p class="note small" id="daeunNote"></p>
+      </section>
+
+      <!-- 6. 실천 조언 -->
+      <section class="card advice" aria-labelledby="t6">
+        <div class="card-head">
+          <h2 id="t6"><span class="num">6</span> 미리의 작은 실천 조언</h2>
+          <p>운명을 정하는 대신, 오늘 할 수 있는 일을 골라요</p>
+        </div>
+        <div class="advice-grid" id="adviceGrid"></div>
+      </section>
+    </div>
+
+    <!-- ================= 용어 사전 ================= -->
+    <details class="card glossary">
+      <summary>
+        <span class="g-ico">📖</span>
+        <span>
+          <b>사주 용어, 이렇게 읽어요</b>
+          <small>모르는 단어가 나오면 펼쳐 보세요</small>
+        </span>
+        <span class="g-chevron">▾</span>
+      </summary>
+      <dl class="glossary-list">
+        <div><dt>사주팔자</dt><dd>태어난 연·월·일·시를 여덟 글자로 적은 것. '네 개의 기둥'이라는 뜻이에요.</dd></div>
+        <div><dt>일간 (나)</dt><dd>여덟 글자 중 <b>태어난 날의 윗글자</b>. 사주에서 '나 자신'을 뜻하는 가장 중요한 글자예요.</dd></div>
+        <div><dt>천간 / 지지</dt><dd>한 기둥의 위 글자가 하늘의 기운(천간), 아래 글자가 땅의 기운(지지)이에요. 동물(닭·뱀 등)은 아래 글자 이름입니다.</dd></div>
+        <div><dt>오행</dt><dd>나무·불·흙·쇠·물 다섯 기운. 성격과 생활 방식의 '재료'예요.</dd></div>
+        <div><dt>용신</dt><dd>내 사주에서 <b>부족하거나 필요한 기운</b>. 생활 습관으로 채우면 좋은 방향이에요.</dd></div>
+        <div><dt>토가 강하다</dt><dd>흙 기운이 많다는 뜻. 현실적·책임감은 좋지만, 몸과 마음이 무거워지기 쉬워요.</dd></div>
+        <div><dt>수 일간</dt><dd>물 기운이 '나'인 사주. 사람 마음을 잘 읽고 조용히 스며드는 사람이 많아요.</dd></div>
+        <div><dt>세운 (정미년)</dt><dd>그 해에 들어오는 기운. 예: 2027년은 정(丁)미(未)가 들어와요.</dd></div>
+        <div><dt>대운</dt><dd>10년 단위로 바뀌는 큰 흐름. 지금 사는 '계절' 같은 거예요.</dd></div>
+        <div><dt>음 / 양</dt><dd>같은 기운이라도 안으로 모으는 성질(음)과 밖으로 뻗는 성질(양)으로 나뉘어요.</dd></div>
+      </dl>
+    </details>
 
     <footer class="foot">
       <p class="disclaimer">
         이 페이지는 전통 해석을 바탕으로 한 <b>재미와 자기점검용</b> 콘텐츠입니다.
         의료·투자·법률 등 중요한 결정을 대신하지 않습니다.
       </p>
-      <p class="made">Made with 💧 · saju data: 이행자 2027</p>
+      <p class="made">Made with 💧 · 계산은 만세력 근사 방식이며, 절기 경계 날짜는 하루 정도 달라질 수 있어요.</p>
     </footer>
   </main>
 
+  <script src="saju.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
